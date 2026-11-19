@@ -42,7 +42,24 @@ tersimpan di perangkat tamu masing-masing (mode pratinjau) dan **tidak** terkump
    apiUrl: "https://script.google.com/macros/s/AKfycb.../exec",
    ```
 
-8. Simpan berkas, lalu unggah ulang (lihat bagian 4).
+8. Simpan berkas. Karena folder ini sudah berupa repositori Git, jalankan:
+
+   ```powershell
+   git add index.html
+   git commit -m "atur apiUrl rekap"
+   git push
+   ```
+
+   Vercel akan deploy otomatis bila proyeknya diimpor dari GitHub; jika deploy manual, jalankan
+   `npx vercel --prod`.
+
+> **Uji cepat koneksi:** buka `URL_ANDA/exec?action=rekap` di browser.
+> - `{"ok":true,"data":[]}` (atau berisi daftar nama) → backend siap.
+> - Muncul halaman login Google / HTML → akses belum **Anyone**.
+> - `{"ok":false,"pesan":"..."}` → jalankan fungsi `siapkan`, lalu cek **Executions** di Apps Script.
+
+> **Kalau `Code.gs` diubah:** Deploy → **Manage deployments** → ikon pensil → Version: **New version**
+> → Deploy. URL tetap sama; tanpa langkah ini perubahan tidak ikut aktif.
 
 > **Catatan penting:** akses harus **Anyone**, bukan "Anyone with Google account".
 > Jika memakai akun Google Workspace kampus, kebijakan organisasi mungkin membatasi opsi ini —

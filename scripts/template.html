@@ -554,7 +554,7 @@
    waPanitia : nomor WhatsApp panitia, format 628xxxxxxxxxx.
    ===================================================================== */
 const CONFIG = {
-  apiUrl: "",
+  apiUrl: "https://script.google.com/macros/s/AKfycbzRLBbteJKeCzuDuY3tVBOKeGJaNJYFfggu2KhD9vazrR6seYX7cAxPBuLI2ego_mhL/exec",
   waPanitia: "",
   nama: "Prof. Dr. apt. Lusi Nurdianti, M.Si.",
   mulai: "2026-11-30T01:00:00Z",     // 08.00 WIB
@@ -782,7 +782,7 @@ async function muatRekap() {
   try {
     if (CONFIG.apiUrl) {
       const res = await jsonp(CONFIG.apiUrl, { action: 'rekap' });
-      if (!res || res.ok !== true) throw new Error('rekap');
+      if (!res || res.ok !== true) throw new Error((res && res.pesan) || 'rekap');
       renderRekap(res.data || [], 'Diperbarui otomatis setiap kali halaman dibuka.');
       $('rekapSub').textContent = 'Daftar tamu yang telah mengonfirmasi kehadiran.';
     } else {
@@ -790,7 +790,8 @@ async function muatRekap() {
       $('rekapSub').textContent = 'Pratinjau rekap — belum terhubung ke panitia.';
     }
   } catch (err) {
-    renderRekap([], 'Rekap belum dapat dimuat. Periksa koneksi internet, lalu tekan “Muat ulang”.');
+    const rinci = params.get('debug') === '1' && err && err.message ? ' [' + err.message + ']' : '';
+    renderRekap([], 'Rekap belum dapat dimuat saat ini. Tekan “Muat ulang” beberapa saat lagi.' + rinci);
   } finally {
     btn.disabled = false;
   }
