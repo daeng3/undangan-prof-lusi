@@ -241,9 +241,10 @@ Cara ini lebih ringan daripada menyisipkan base64 baru.
 ## 8. Catatan teknis dan batasan
 
 - **Data tamu** tersimpan di Google Sheets milik panitia; undangan tidak menyimpan data di tempat lain.
-- **Daftar konfirmasi tampil publik** di halaman (nama, instansi, status). Ini disengaja agar tamu
-  melihat rekap seperti yang diminta. Jika tidak diinginkan, hapus blok `<div class="rekap" id="rekapBox">`
-  dari `index.html` — data tetap masuk ke sheet.
+- **Daftar konfirmasi dan ucapan tampil publik** di halaman (nama, instansi, status, dan pesan).
+  Ini disengaja agar tamu melihat rekap seperti yang diminta. Jika tidak diinginkan, hapus blok
+  `<div class="rekap" id="rekapBox">` dan/atau section `<section ... id="ucapan">` dari `index.html`
+  — data tetap masuk ke sheet.
 - **Nama yang sama akan memperbarui baris lama**, bukan menambah baris baru, sehingga tamu bisa
   mengubah konfirmasinya.
 - **Rekap menampilkan maksimal 300 konfirmasi terbaru.** Data penuh tetap ada di sheet.

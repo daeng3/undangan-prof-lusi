@@ -177,6 +177,7 @@ function ambilRekap_() {
       instansi: String(r[2] || '').trim(),
       kehadiran: String(r[3] || '').trim(),
       jumlah: Number(r[4]) || 0,
+      pesan: String(r[5] || '').trim(),
       waktu: waktu
     });
   }

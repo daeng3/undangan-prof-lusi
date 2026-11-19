@@ -202,7 +202,7 @@
   .rekap__sub{margin:6px 0 0;font-size:12px;color:#7c8a8e;line-height:1.6}
   .badge{display:inline-flex;align-items:center;gap:7px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:6px 10px;border:1px solid #d9c9a4;color:#8a6a30;background:#fbf4e3;border-radius:999px;white-space:nowrap}
   .badge i{width:5px;height:5px;border-radius:50%;background:#c9a45e;display:inline-block}
-  .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 0}
+  .chips{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:18px 0 0}
   .chip{background:#fff;border:1px solid #e7dfcd;padding:12px 8px;text-align:center}
   .chip b{display:block;font-family:var(--serif);font-size:24px;font-weight:500;line-height:1;color:#1f333d;font-variant-numeric:tabular-nums}
   .chip span{display:block;margin-top:6px;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#8a969a}
@@ -220,6 +220,20 @@
   .rekap__refresh{background:none;border:1px solid #ddd2bb;color:#7a6438;font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:9px 13px;cursor:pointer;border-radius:2px;transition:.2s}
   .rekap__refresh:hover{border-color:var(--gold);background:#fbf4e3}
   .rekap__refresh[disabled]{opacity:.55;cursor:progress}
+
+  /* ---------- ucapan ---------- */
+  .wishes{margin-top:32px;background:#fff;border:1px solid var(--line);border-top:2px solid var(--gold);padding:24px 20px 20px;box-shadow:var(--shadow)}
+  .wishes__head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .wishes__title{font-family:var(--serif);font-size:24px;font-weight:500;margin:0;color:#1f333d}
+  .wishes__count{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-d)}
+  .wishes__list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:11px;max-height:430px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#d8c9a7 transparent}
+  .wishes__list::-webkit-scrollbar{width:5px}
+  .wishes__list::-webkit-scrollbar-thumb{background:#ddcdab;border-radius:3px}
+  .wish{position:relative;padding:15px 17px 14px 42px;background:linear-gradient(180deg,#fffdf8,#faf5ea);border:1px solid #ece4d3}
+  .wish::before{content:"\201C";position:absolute;left:12px;top:6px;font-family:var(--serif);font-size:36px;line-height:1;color:#ddc496}
+  .wish__text{font-family:var(--serif);font-size:16.5px;line-height:1.65;color:#33474f;margin:0;overflow-wrap:anywhere;white-space:pre-line}
+  .wish__by{margin:8px 0 0;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#8a6a30;line-height:1.6}
+  .wishes__empty{margin:16px 0 0;padding:22px 16px;text-align:center;border:1px dashed #ddd2bb;background:#fffdf8;font-size:12.5px;color:#8a969a;line-height:1.7}
 
   /* ---------- lokasi ---------- */
   .loc{display:grid;gap:26px;margin-top:32px}
@@ -468,7 +482,7 @@
         <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
       <button class="btn btn--gold submit" id="kirimBtn" type="submit">Kirim Konfirmasi</button>
-      <p class="form-note">Nama dan status kehadiran Bapak/Ibu akan tampil pada daftar konfirmasi di bawah.</p>
+      <p class="form-note">Nama, status kehadiran, dan ucapan Bapak/Ibu akan tampil pada halaman ini.</p>
       <div class="status" id="status" role="status" aria-live="polite"></div>
     </form>
 
@@ -483,10 +497,26 @@
       <div class="chips">
         <div class="chip"><b id="statTotal">0</b><span>Konfirmasi</span></div>
         <div class="chip"><b id="statHadir">0</b><span>Hadir</span></div>
-        <div class="chip"><b id="statKursi">0</b><span>Perkiraan Kursi</span></div>
       </div>
       <ul class="rekap__list" id="rekapList" aria-live="polite"></ul>
       <p class="rekap__note" id="rekapNote"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ UCAPAN ============ -->
+<section class="section section--ivory" id="ucapan">
+  <div class="section__inner reveal">
+    <p class="eyebrow">Doa &amp; Harapan</p>
+    <h2 class="h2">Ucapan untuk Guru Besar</h2>
+    <p class="lead">Doa dan harapan yang dititipkan para tamu melalui formulir konfirmasi.</p>
+    <div class="wishes">
+      <div class="wishes__head">
+        <h3 class="wishes__title">Ucapan Tamu</h3>
+        <span class="wishes__count" id="wishesCount">Belum ada</span>
+      </div>
+      <ul class="wishes__list" id="wishesList" aria-live="polite"></ul>
+      <p class="wishes__empty" id="wishesEmpty">Belum ada ucapan. Ucapan Bapak/Ibu akan tampil di sini setelah konfirmasi dikirim.</p>
     </div>
   </div>
 </section>
@@ -534,7 +564,7 @@
   <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8l5.4 10.8L49 20.6l-8.5 8.3 2 11.7L32 35l-10.5 5.6 2-11.7L15 20.6l11.6-1.8z" fill="none" stroke="#c9a45e" stroke-width="1.6"/></svg>
   <p class="footer__name">Prof. Dr. apt. Lusi Nurdianti, M.Si.</p>
   <p class="footer__meta">Pengukuhan Guru Besar · 30 November 2026</p>
-  <p class="footer__small">Undangan digital ini disiapkan untuk memudahkan penyampaian informasi acara.<br>Mohon tidak menyebarkan tautan ini kepada pihak yang tidak berkepentingan.</p>
+  <p class="footer__small">Undangan digital ini disiapkan oleh Program Studi Sistem Informasi Universitas Bakti Tunas Husada.<br>Mohon tidak menyebarkan tautan ini kepada pihak yang tidak berkepentingan.</p>
 </footer>
 
 <!-- ============ DOCK ============ -->
@@ -753,11 +783,10 @@ function renderRekap(rows, catatan) {
   dataRekap = rows;
   const list = $('rekapList'); list.textContent = '';
   const hadir = rows.filter(r => r.kehadiran === 'Hadir');
-  const kursi = hadir.reduce((s, r) => s + (parseInt(r.jumlah, 10) || 1), 0);
   $('statTotal').textContent = rows.length;
   $('statHadir').textContent = hadir.length;
-  $('statKursi').textContent = kursi;
   $('rekapNote').textContent = catatan || '';
+  renderUcapan(rows);
 
   if (!rows.length) {
     list.appendChild(el('li', 'rekap__empty', 'Belum ada konfirmasi. Jadilah yang pertama mengonfirmasi kehadiran.'));
@@ -780,11 +809,27 @@ function renderRekap(rows, catatan) {
   });
 }
 
+function renderUcapan(rows) {
+  const list = $('wishesList');
+  if (!list) return;
+  list.textContent = '';
+  const ucapan = rows.filter(r => String(r.pesan || '').trim());
+  $('wishesCount').textContent = ucapan.length ? ucapan.length + ' ucapan' : 'Belum ada';
+  $('wishesEmpty').hidden = ucapan.length > 0;
+  ucapan.forEach(r => {
+    const li = el('li', 'wish');
+    li.appendChild(el('p', 'wish__text', String(r.pesan).trim().slice(0, 300)));
+    const by = [String(r.nama || '').trim(), String(r.instansi || '').trim()].filter(Boolean).join(' · ');
+    if (by) li.appendChild(el('p', 'wish__by', by));
+    list.appendChild(li);
+  });
+}
+
 function tampilkanSementara(d) {
   const lain = dataRekap.filter(r => String(r.nama || '').trim().toLowerCase() !== d.nama.toLowerCase());
   lain.unshift({
     nama: d.nama, instansi: d.instansi, kehadiran: d.kehadiran,
-    jumlah: d.kehadiran === 'Hadir' ? d.jumlah : 0, waktu: new Date().toISOString()
+    jumlah: d.kehadiran === 'Hadir' ? d.jumlah : 0, pesan: d.pesan, waktu: new Date().toISOString()
   });
   renderRekap(lain, 'Konfirmasi Bapak/Ibu baru saja tersimpan.');
 }
