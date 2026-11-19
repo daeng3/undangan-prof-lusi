@@ -1,0 +1,10 @@
+# Berkas yang tidak perlu diunggah ke Vercel.
+# Yang dipakai situs hanya: index.html dan share.jpg
+foto.png
+susunan acara.jpeg
+Undangan Pengukuhan.html
+Code.gs
+PANDUAN.md
+assets/
+scripts/
+.zwork/
