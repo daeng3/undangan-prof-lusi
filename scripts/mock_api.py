@@ -9,9 +9,15 @@ from urllib.parse import urlparse, parse_qs
 
 DATA = [
     {"nama": "Asep Hidayat", "instansi": "Universitas Bakti Tunas Husada", "kehadiran": "Hadir",
-     "jumlah": 2, "waktu": "2026-11-19T03:10:00.000Z"},
+     "jumlah": 2,
+     "pesan": "Semoga ilmu yang diamanahkan semakin bermanfaat bagi mahasiswa dan masyarakat. Barakallahu fiikum.",
+     "waktu": "2026-11-19T03:10:00.000Z"},
     {"nama": "Rina Marlina", "instansi": "SMAN 1 Tasikmalaya", "kehadiran": "Tidak hadir",
-     "jumlah": 0, "waktu": "2026-11-18T09:00:00.000Z"},
+     "jumlah": 0,
+     "pesan": "Selamat atas pengukuhan Guru Besar. Semoga sehat selalu dan terus menginspirasi generasi muda.",
+     "waktu": "2026-11-18T09:00:00.000Z"},
+    {"nama": "Budi Santoso", "instansi": "Dinas Pendidikan Kota Tasikmalaya", "kehadiran": "Hadir",
+     "jumlah": 3, "pesan": "", "waktu": "2026-11-17T02:00:00.000Z"},
 ]
 LOCK = threading.Lock()
 
