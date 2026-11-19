@@ -732,7 +732,12 @@ form.addEventListener('submit', async (e) => {
     statusBox.className = 'status is-ok';
     form.reset(); paxField.hidden = true;
     if (tamu) $('nama').value = tamu;
-    await muatRekap();
+    if (mode === 'api') {
+      tampilkanSementara(d);
+      tungguRekap(d.nama);
+    } else {
+      await muatRekap();
+    }
   } catch (err) {
     statusBox.textContent = 'Konfirmasi belum terkirim. Periksa koneksi internet lalu coba lagi' +
       (CONFIG.waPanitia ? ', atau hubungi panitia melalui WhatsApp.' : '.');
@@ -743,7 +748,9 @@ form.addEventListener('submit', async (e) => {
 });
 
 /* ---------- rekap ---------- */
+let dataRekap = [];
 function renderRekap(rows, catatan) {
+  dataRekap = rows;
   const list = $('rekapList'); list.textContent = '';
   const hadir = rows.filter(r => r.kehadiran === 'Hadir');
   const kursi = hadir.reduce((s, r) => s + (parseInt(r.jumlah, 10) || 1), 0);
@@ -771,6 +778,32 @@ function renderRekap(rows, catatan) {
     li.appendChild(body);
     list.appendChild(li);
   });
+}
+
+function tampilkanSementara(d) {
+  const lain = dataRekap.filter(r => String(r.nama || '').trim().toLowerCase() !== d.nama.toLowerCase());
+  lain.unshift({
+    nama: d.nama, instansi: d.instansi, kehadiran: d.kehadiran,
+    jumlah: d.kehadiran === 'Hadir' ? d.jumlah : 0, waktu: new Date().toISOString()
+  });
+  renderRekap(lain, 'Konfirmasi Bapak/Ibu baru saja tersimpan.');
+}
+
+async function tungguRekap(nama) {
+  const kunci = String(nama).trim().toLowerCase();
+  for (let i = 0; i < 4; i++) {
+    await new Promise(r => setTimeout(r, 800));
+    try {
+      const res = await jsonp(CONFIG.apiUrl, { action: 'rekap' });
+      if (!res || res.ok !== true) continue;
+      const data = res.data || [];
+      if (data.some(r => String(r.nama || '').trim().toLowerCase() === kunci)) {
+        renderRekap(data, 'Diperbarui otomatis setiap kali halaman dibuka.');
+        return;
+      }
+    } catch (e) { /* coba lagi */ }
+  }
+  muatRekap();
 }
 
 function bacaLokal() {
